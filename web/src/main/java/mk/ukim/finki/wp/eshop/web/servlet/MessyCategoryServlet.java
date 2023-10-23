@@ -15,11 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/servlet/category")
-public class CategoryServlet extends HttpServlet {
+public class MessyCategoryServlet extends HttpServlet {
 
     private final SpringTemplateEngine springTemplateEngine;
 
-    public CategoryServlet(SpringTemplateEngine springTemplateEngine) {
+    public MessyCategoryServlet(SpringTemplateEngine springTemplateEngine) {
         this.springTemplateEngine = springTemplateEngine;
     }
 

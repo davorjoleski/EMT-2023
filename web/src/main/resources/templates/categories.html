@@ -1,0 +1,42 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Categories</title>
+</head>
+
+<body>
+
+<h1>Categories Page</h1>
+
+<a th:href="@{/hello}">Home</a>
+
+<p th:text="'Hello' + ${ipAddress}"></p>
+<p th:text="'Number of elements: ' + ${#lists.size(categories)}"></p>  <!-- Returns the number of items in the list -->
+
+
+<h3>All categories</h3>
+<ul th:each="category : ${categories}">
+    <li th:text="${category.getName()} + ' ' + ${category.getDescription()} "></li>
+</ul>
+
+<h3>Show only movies category</h3>
+<ul th:each="category : ${categories}">
+    <th:block th:if="${category.getName()} == 'Movies'">  <!-- Define conditions with th:if -->
+        <li th:text="${category.getName()} + ' ' + ${category.getDescription()} "></li>
+    </th:block>
+</ul>
+
+<h3>Create new category</h3>
+
+<form th:method="post" th:action="@{/servlet/category}">
+    <label for="cname">Category name</label>
+    <input type="text" name="cname" id="cname">
+    <label for="cdesc">Category description</label>
+    <input type="text" name="cdesc" id="cdesc">
+    <input type="submit" value="Submit">
+</form>
+
+</body>
+
+</html>

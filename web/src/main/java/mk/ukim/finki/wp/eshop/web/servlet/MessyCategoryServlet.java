@@ -1,6 +1,5 @@
 package mk.ukim.finki.wp.eshop.web.servlet;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(urlPatterns = "/servlet/category")
+@WebServlet(urlPatterns = "/servlet/messy/category")
 public class MessyCategoryServlet extends HttpServlet {
 
     private final SpringTemplateEngine springTemplateEngine;

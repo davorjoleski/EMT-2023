@@ -11,7 +11,10 @@
 
 <a th:href="@{/hello}">Home</a>
 
+<h3>User Info</h3>
 <p th:text="'Hello' + ${ipAddress}"></p>
+
+<h3>Category List Info</h3>
 <p th:text="'Number of elements: ' + ${#lists.size(categories)}"></p>  <!-- Returns the number of items in the list -->
 
 

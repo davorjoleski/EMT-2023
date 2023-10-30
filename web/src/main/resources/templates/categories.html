@@ -12,6 +12,21 @@
 <a th:href="@{/hello}">Home</a>
 
 <h3>User Info</h3>
+<th:block th:if="${session.user!=null}">
+    <h2>Info about user</h2>
+    <div th:text="${session.user.username}"></div>
+    <div th:text="${session.user.name}"></div>
+    <div th:text="${session.user.surname}"></div>
+    <div>
+        <a href="/logout">Logout</a>
+    </div>
+</th:block>
+<th:block th:if="${session.user==null}">
+    <div>
+        <a href="/login">Login</a>
+    </div>
+</th:block>
+
 <p th:text="'Hello' + ${ipAddress}"></p>
 
 <h3>Category List Info</h3>

@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import mk.ukim.finki.wp.eshop.model.User;
+import mk.ukim.finki.wp.eshop.model.exceptions.InvalidArgumentsException;
 import mk.ukim.finki.wp.eshop.model.exceptions.InvalidUserCredentialsException;
 import mk.ukim.finki.wp.eshop.model.exceptions.PasswordsDoNotMatchException;
 import mk.ukim.finki.wp.eshop.service.AuthService;
@@ -16,6 +17,7 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.web.IWebExchange;
 import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 
+import java.awt.dnd.InvalidDnDOperationException;
 import java.io.IOException;
 
 @WebServlet(name="login-servlet", urlPatterns = "/login")
@@ -56,17 +58,16 @@ public class LoginServlet extends HttpServlet {
         User user = null;
         try {
             user = authService.login(username,password);
-        } catch (InvalidUserCredentialsException ex) {
-            context.setVariable("hasError",true);
-            context.setVariable("error",ex.getMessage());
-            springTemplateEngine.process("login.html",context,resp.getWriter());
-        } catch (PasswordsDoNotMatchException ex) {
+        } catch (InvalidUserCredentialsException | InvalidArgumentsException ex) {
             context.setVariable("hasError",true);
             context.setVariable("error",ex.getMessage());
             springTemplateEngine.process("login.html",context,resp.getWriter());
         }
-        req.getSession().setAttribute("user",user);
-        resp.sendRedirect("/servlet/category");
+        if (user!=null) {
+            req.getSession().setAttribute("user",user);
+            resp.sendRedirect("/servlet/category");
+        }
+
 
     }
 }

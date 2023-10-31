@@ -10,7 +10,9 @@
 <h1>Categories Page</h1>
 
 <a th:href="@{/hello}">Home</a>
-
+<th:block>
+    <div th:text="${userViews?:0}"></div>
+</th:block>
 <h3>User Info</h3>
 <th:block th:if="${session.user!=null}">
     <h2>Info about user</h2>

@@ -34,6 +34,10 @@ public class CategoryServlet extends HttpServlet {
         context.setVariable("categories", categoryService.listCategories());
         context.setVariable("ipAddress", req.getRemoteAddr());
 
+        Integer userViews = (Integer) getServletContext().getAttribute("userViews");
+        getServletContext().setAttribute("userViews",++userViews);
+        context.setVariable("userViews", getServletContext().getAttribute("userViews"));
+
         springTemplateEngine.process(
                 "categories.html",
                 context,

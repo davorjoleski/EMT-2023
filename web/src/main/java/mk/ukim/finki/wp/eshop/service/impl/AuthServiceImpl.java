@@ -19,7 +19,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public User login(String username, String password) {
-        if (username==null || password == null || username.isEmpty() || password.isEmpty()) {
+        if (username == null || password == null || username.isEmpty() || password.isEmpty()) {
             throw new InvalidArgumentsException();
         }
         return inMemoryUserRepository.findByUsernameAndPassword(username, password)
@@ -28,13 +28,13 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public User register(String username, String password, String repeatPassword, String name, String surname) {
-        if (username==null || username.isEmpty()  || password==null || password.isEmpty()) {
+        if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
             throw new InvalidArgumentsException();
         }
         if (!password.equals(repeatPassword)) {
             throw new PasswordsDoNotMatchException();
         }
-        User user = new User(username,password,name,surname);
+        User user = new User(username, password, name, surname);
         return inMemoryUserRepository.saveOrUpdate(user);
 
     }

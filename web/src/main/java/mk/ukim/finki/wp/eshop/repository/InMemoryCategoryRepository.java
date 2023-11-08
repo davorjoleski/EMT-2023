@@ -2,6 +2,7 @@ package mk.ukim.finki.wp.eshop.repository;
 
 import mk.ukim.finki.wp.eshop.bootstrap.DataHolder;
 import mk.ukim.finki.wp.eshop.model.Category;
+import mk.ukim.finki.wp.eshop.model.Product;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,12 +15,16 @@ public class InMemoryCategoryRepository {
         return DataHolder.categories;
     }
 
+    public Optional<Category> findById(Long id) {
+        return DataHolder.categories.stream().filter(i -> i.getId().equals(id)).findFirst();
+    }
+
     public Category save(Category category) {
-        if (category == null || category.name.isEmpty()) {
+        if (category == null || category.getName().isEmpty()) {
             throw new IllegalArgumentException();
         }
 
-        DataHolder.categories.removeIf(c-> c.getName().equals(category.getName()));
+        DataHolder.categories.removeIf(c -> c.getName().equals(category.getName()));
         DataHolder.categories.add(category);
         return category;
     }

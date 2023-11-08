@@ -9,9 +9,9 @@ import mk.ukim.finki.wp.eshop.model.User;
 
 import java.io.IOException;
 
-@WebFilter(filterName="auth-filter",urlPatterns = "/*",
-        dispatcherTypes = {DispatcherType.REQUEST,DispatcherType.FORWARD},
-        initParams = @WebInitParam(name="ignore-path", value="/login"))
+@WebFilter(filterName = "auth-filter", urlPatterns = "/*",
+        dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD},
+        initParams = @WebInitParam(name = "ignore-path", value = "/login"))
 public class LoginFilter implements Filter {
 
     private String ignorePath;
@@ -26,16 +26,15 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        User user = (User)request.getSession().getAttribute("user");
+        User user = (User) request.getSession().getAttribute("user");
         String path = request.getServletPath();
-        if (ignorePath.startsWith(path) || user!=null) {
+        if (path.startsWith(ignorePath) || user != null) {
             System.out.println("WebFilter preprocessing...");
-            filterChain.doFilter(servletRequest,servletResponse);
+            filterChain.doFilter(servletRequest, servletResponse);
             System.out.println("WebFilter postprocessing...");
         } else {
             response.sendRedirect("/login");
         }
-
     }
 
     @Override

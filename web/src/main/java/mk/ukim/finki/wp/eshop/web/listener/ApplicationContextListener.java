@@ -9,7 +9,7 @@ public class ApplicationContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContextListener.super.contextInitialized(sce);
-        sce.getServletContext().setAttribute("userViews",0);
+        sce.getServletContext().setAttribute("userViews", 0);
     }
 
     @Override

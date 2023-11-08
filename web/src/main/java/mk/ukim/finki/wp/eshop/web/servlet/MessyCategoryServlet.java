@@ -66,7 +66,7 @@ public class MessyCategoryServlet extends HttpServlet {
                 .buildApplication(getServletContext())
                 .buildExchange(req, resp);
 
-        WebContext context =  new WebContext(webExchange);
+        WebContext context = new WebContext(webExchange);
         context.setVariable("categories", categories);
         context.setVariable("ipAddress", req.getRemoteAddr());
 

@@ -20,7 +20,7 @@ import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 import java.awt.dnd.InvalidDnDOperationException;
 import java.io.IOException;
 
-@WebServlet(name="login-servlet", urlPatterns = "/login")
+@WebServlet(name = "login-servlet", urlPatterns = "/servlet/login")
 public class LoginServlet extends HttpServlet {
 
     private final SpringTemplateEngine springTemplateEngine;
@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
         IWebExchange webExchange = JakartaServletWebApplication
                 .buildApplication(getServletContext())
                 .buildExchange(req, resp);
-        WebContext context =  new WebContext(webExchange);
+        WebContext context = new WebContext(webExchange);
         springTemplateEngine.process(
                 "login.html",
                 context,
@@ -46,7 +46,6 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         IWebExchange webExchange = JakartaServletWebApplication
                 .buildApplication(getServletContext())
                 .buildExchange(req, resp);
@@ -57,17 +56,15 @@ public class LoginServlet extends HttpServlet {
 
         User user = null;
         try {
-            user = authService.login(username,password);
+            user = authService.login(username, password);
         } catch (InvalidUserCredentialsException | InvalidArgumentsException ex) {
-            context.setVariable("hasError",true);
-            context.setVariable("error",ex.getMessage());
-            springTemplateEngine.process("login.html",context,resp.getWriter());
+            context.setVariable("hasError", true);
+            context.setVariable("error", ex.getMessage());
+            springTemplateEngine.process("login.html", context, resp.getWriter());
         }
-        if (user!=null) {
-            req.getSession().setAttribute("user",user);
+        if (user != null) {
+            req.getSession().setAttribute("user", user);
             resp.sendRedirect("/servlet/category");
         }
-
-
     }
 }

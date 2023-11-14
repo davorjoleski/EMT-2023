@@ -21,13 +21,14 @@ public class ProductServiceImpl implements ProductService {
     private final InMemoryManufacturerRepository manufacturerRepository;
     private final InMemoryCategoryRepository categoryRepository;
 
-    public ProductServiceImpl(InMemoryProductRepository inMemoryProductRepository,
+    public ProductServiceImpl(InMemoryProductRepository productRepository,
                               InMemoryManufacturerRepository manufacturerRepository,
                               InMemoryCategoryRepository categoryRepository) {
-        this.productRepository = inMemoryProductRepository;
+        this.productRepository = productRepository;
         this.manufacturerRepository = manufacturerRepository;
         this.categoryRepository = categoryRepository;
     }
+
 
     @Override
     public List<Product> findAll() {
@@ -45,7 +46,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Product> save(String name, Double price, Integer quantity, Long categoryId, Long manufacturerId) {
+    public Optional<Product> save(String name, Double price, Integer quantity,
+                                  Long categoryId, Long manufacturerId) {
         Category category = this.categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new CategoryNotFoundException(categoryId));
         Manufacturer manufacturer = this.manufacturerRepository.findById(manufacturerId)

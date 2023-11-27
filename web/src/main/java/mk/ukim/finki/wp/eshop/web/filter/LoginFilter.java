@@ -11,15 +11,20 @@ import java.io.IOException;
 
 @WebFilter(filterName = "auth-filter", urlPatterns = "/*",
         dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD},
-        initParams = @WebInitParam(name = "ignore-path", value = "/login"))
+        initParams = {
+            @WebInitParam(name = "login-path", value = "/login"),
+            @WebInitParam(name = "register-path", value = "/register")
+        })
 public class LoginFilter implements Filter {
 
-    private String ignorePath;
+    private String loginPath;
+    private String registerPath;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         Filter.super.init(filterConfig);
-        ignorePath = filterConfig.getInitParameter("ignore-path");
+        loginPath = filterConfig.getInitParameter("login-path");
+        registerPath = filterConfig.getInitParameter("register-path");
     }
 
     @Override
@@ -28,7 +33,7 @@ public class LoginFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         User user = (User) request.getSession().getAttribute("user");
         String path = request.getServletPath();
-        if (path.startsWith(ignorePath) || user != null) {
+        if (path.startsWith(loginPath) || path.startsWith(registerPath) || user != null) {
             System.out.println("WebFilter preprocessing...");
             filterChain.doFilter(servletRequest, servletResponse);
             System.out.println("WebFilter postprocessing...");

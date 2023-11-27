@@ -26,7 +26,7 @@ public class DataHolder {
 
         users.add(new User("kostadin.mishev", "km", "Kostadin", "Mishev"));
         users.add(new User("ana.todorovska", "at", "Ana", "Todorovska"));
-        users.add(new User("milena.trajanovska", "mt", "Milena", "Trajanovska"));
+        users.add(new User("milena.trajanoska", "mt", "Milena", "Trajanoska"));
         users.add(new User("aleksandar.petrushevski", "ap", "Aleksandar", "Petrushevski"));
 
         categories.add(new Category("Books", "Books category"));

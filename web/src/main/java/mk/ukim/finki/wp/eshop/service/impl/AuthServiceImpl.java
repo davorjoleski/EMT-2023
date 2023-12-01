@@ -17,25 +17,31 @@ public class AuthServiceImpl implements AuthService {
         this.inMemoryUserRepository = inMemoryUserRepository;
     }
 
+    private boolean credentialsInvalid(String username, String password) {
+        return username == null || password == null || username.isEmpty() || password.isEmpty();
+    }
+
     @Override
     public User login(String username, String password) {
-        if (username == null || password == null || username.isEmpty() || password.isEmpty()) {
+        if (credentialsInvalid(username, password)) {
             throw new InvalidArgumentsException();
         }
+
         return inMemoryUserRepository.findByUsernameAndPassword(username, password)
                 .orElseThrow(InvalidUserCredentialsException::new);
     }
 
     @Override
     public User register(String username, String password, String repeatPassword, String name, String surname) {
-        if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+        if (credentialsInvalid(username, password)) {
             throw new InvalidArgumentsException();
         }
+
         if (!password.equals(repeatPassword)) {
             throw new PasswordsDoNotMatchException();
         }
+
         User user = new User(username, password, name, surname);
         return inMemoryUserRepository.saveOrUpdate(user);
-
     }
 }

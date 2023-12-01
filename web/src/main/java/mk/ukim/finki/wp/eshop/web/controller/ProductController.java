@@ -34,6 +34,7 @@ public class ProductController {
             model.addAttribute("hasError", true);
             model.addAttribute("error", error);
         }
+
         List<Product> products = this.productService.findAll();
         model.addAttribute("products", products);
         model.addAttribute("bodyContent", "products");
@@ -52,12 +53,14 @@ public class ProductController {
             Product product = this.productService.findById(id).get();
             List<Manufacturer> manufacturers = this.manufacturerService.findAll();
             List<Category> categories = this.categoryService.listCategories();
+
             model.addAttribute("manufacturers", manufacturers);
             model.addAttribute("categories", categories);
             model.addAttribute("product", product);
             model.addAttribute("bodyContent", "add-product");
             return "master-template";
         }
+
         return "redirect:/products?error=ProductNotFound";
     }
 
@@ -65,6 +68,7 @@ public class ProductController {
     public String addProductPage(Model model) {
         List<Manufacturer> manufacturers = this.manufacturerService.findAll();
         List<Category> categories = this.categoryService.listCategories();
+
         model.addAttribute("manufacturers", manufacturers);
         model.addAttribute("categories", categories);
         model.addAttribute("bodyContent", "add-product");

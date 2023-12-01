@@ -11,7 +11,9 @@ import java.util.Optional;
 public class InMemoryShoppingCartRepository {
 
     public Optional<ShoppingCart> findById(Long id) {
-        return DataHolder.shoppingCarts.stream().filter(i -> i.getId().equals(id)).findFirst();
+        return DataHolder.shoppingCarts.stream()
+                .filter(i -> i.getId().equals(id))
+                .findFirst();
     }
 
     public Optional<ShoppingCart> findByUsernameAndStatus(String username, ShoppingCartStatus status) {

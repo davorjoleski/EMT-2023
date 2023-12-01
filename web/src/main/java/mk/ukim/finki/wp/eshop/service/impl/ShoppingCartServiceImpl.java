@@ -15,6 +15,7 @@ import mk.ukim.finki.wp.eshop.service.ShoppingCartService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,9 +35,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public List<Product> listAllProductsInShoppingCart(Long cartId) {
-        if (!this.shoppingCartRepository.findById(cartId).isPresent())
+        Optional<ShoppingCart> shoppingCartOptional = this.shoppingCartRepository.findById(cartId);
+
+        if (shoppingCartOptional.isEmpty()) {
             throw new ShoppingCartNotFoundException(cartId);
-        return this.shoppingCartRepository.findById(cartId).get().getProducts();
+        }
+
+        return shoppingCartOptional.get().getProducts();
     }
 
     @Override
@@ -53,13 +58,17 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public ShoppingCart addProductToShoppingCart(String username, Long productId) {
-        ShoppingCart shoppingCart = this.getActiveShoppingCart(username);
         Product product = this.productService.findById(productId)
                 .orElseThrow(() -> new ProductNotFoundException(productId));
-        if (shoppingCart.getProducts()
-                .stream().filter(i -> i.getId().equals(productId))
-                .collect(Collectors.toList()).size() > 0)
+        ShoppingCart shoppingCart = this.getActiveShoppingCart(username);
+        List<Product> productsInShoppingCart = shoppingCart.getProducts().stream()
+                .filter(i -> i.getId().equals(productId))
+                .collect(Collectors.toList());
+
+        if (productsInShoppingCart.size() > 0) {
             throw new ProductAlreadyInShoppingCartException(productId, username);
+        }
+
         shoppingCart.getProducts().add(product);
         return this.shoppingCartRepository.save(shoppingCart);
     }

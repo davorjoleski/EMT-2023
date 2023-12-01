@@ -17,6 +17,10 @@ public class CategoryServiceImpl implements CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
+    private boolean categoryInvalid(String name) {
+        return name == null || name.isEmpty();
+    }
+
     @Override
     public List<Category> listCategories() {
         return this.categoryRepository.findAll();
@@ -29,7 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category create(String name, String description) {
-        if (name == null || name.isEmpty()) {
+        if (categoryInvalid(name)) {
             throw new IllegalArgumentException();
         }
 
@@ -39,12 +43,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category update(String name, String description) {
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException();
-        }
-
-        Category category = new Category(name, description);
-        return this.categoryRepository.save(category);
+        return create(name, description);
     }
 
     @Override

@@ -6,7 +6,9 @@ import lombok.Data;
 public class Manufacturer {
 
     private Long id;
+
     private String name;
+
     private String address;
 
     public Manufacturer(String name, String address) {

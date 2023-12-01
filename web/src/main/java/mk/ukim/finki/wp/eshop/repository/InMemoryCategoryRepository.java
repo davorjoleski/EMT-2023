@@ -2,7 +2,6 @@ package mk.ukim.finki.wp.eshop.repository;
 
 import mk.ukim.finki.wp.eshop.bootstrap.DataHolder;
 import mk.ukim.finki.wp.eshop.model.Category;
-import mk.ukim.finki.wp.eshop.model.Product;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,12 +10,15 @@ import java.util.stream.Collectors;
 
 @Repository
 public class InMemoryCategoryRepository {
+
     public List<Category> findAll() {
         return DataHolder.categories;
     }
 
     public Optional<Category> findById(Long id) {
-        return DataHolder.categories.stream().filter(i -> i.getId().equals(id)).findFirst();
+        return DataHolder.categories.stream()
+                .filter(i -> i.getId().equals(id))
+                .findFirst();
     }
 
     public Category save(Category category) {
@@ -30,14 +32,6 @@ public class InMemoryCategoryRepository {
     }
 
     public Optional<Category> findByName(String name) {
-
-//        for (Category c: DataHolder.categories) {
-//            if (c.getName().equals(name)) {
-//                return c;
-//            }
-//        }
-//        return null;
-
         return DataHolder.categories.stream()
                 .filter(c -> c.getName().equals(name))
                 .findFirst();
@@ -48,9 +42,7 @@ public class InMemoryCategoryRepository {
     }
 
     public List<Category> search(String text) {
-
-        return DataHolder.categories
-                .stream()
+        return DataHolder.categories.stream()
                 .filter(c -> c.getName().contains(text) ||
                         c.getDescription().contains(text))
                 .collect(Collectors.toList());

@@ -46,8 +46,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Product> save(String name, Double price, Integer quantity,
-                                  Long categoryId, Long manufacturerId) {
+    public Optional<Product> save(
+            String name,
+            Double price,
+            Integer quantity,
+            Long categoryId,
+            Long manufacturerId
+    ) {
         Category category = this.categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new CategoryNotFoundException(categoryId));
         Manufacturer manufacturer = this.manufacturerRepository.findById(manufacturerId)

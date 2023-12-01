@@ -9,12 +9,16 @@ import java.util.Optional;
 @Repository
 public class InMemoryUserRepository {
     public Optional<User> findByUsername(String username) {
-        return DataHolder.users.stream().filter(v -> v.getUsername().equals(username)).findFirst();
+        return DataHolder.users.stream()
+                .filter(v -> v.getUsername().equals(username))
+                .findFirst();
     }
 
     public Optional<User> findByUsernameAndPassword(String username, String password) {
-        return DataHolder.users.stream().filter(v -> v.getUsername().equals(username)
-                && v.getPassword().equals(password)).findFirst();
+        return DataHolder.users.stream()
+                .filter(v -> v.getUsername().equals(username)
+                    && v.getPassword().equals(password))
+                .findFirst();
     }
 
     public User saveOrUpdate(User user) {

@@ -17,27 +17,42 @@ public class InMemoryProductRepository {
     }
 
     public Optional<Product> findById(Long id) {
-        return DataHolder.products.stream().filter(i -> i.getId().equals(id)).findFirst();
+        return DataHolder.products.stream()
+                .filter(i -> i.getId().equals(id))
+                .findFirst();
     }
 
     public Optional<Product> findByName(String name) {
-        return DataHolder.products.stream().filter(i -> i.getName().equals(name)).findFirst();
+        return DataHolder.products.stream()
+                .filter(i -> i.getName().equals(name))
+                .findFirst();
     }
 
     public void deleteById(Long id) {
         DataHolder.products.removeIf(i -> i.getId().equals(id));
     }
 
-    // TODO: 07/11/2023 implement without removing
     public Optional<Product> save(String name, Double price, Integer quantity,
                                   Category category, Manufacturer manufacturer) {
         if (category == null || manufacturer == null) {
             throw new IllegalArgumentException();
         }
 
-        Product product = new Product(name, price, quantity, category, manufacturer);
-        DataHolder.products.removeIf(p -> p.getName().equals(product.getName()));
-        DataHolder.products.add(product);
+        Product product;
+        Optional<Product> productOptional = findByName(name);
+
+        if (productOptional.isPresent()) {
+            product = productOptional.get();
+            product.setPrice(price);
+            product.setQuantity(quantity);
+            product.setCategory(category);
+            product.setManufacturer(manufacturer);
+        }
+        else {
+            product = new Product(name, price, quantity, category, manufacturer);
+            DataHolder.products.add(product);
+        }
+
         return Optional.of(product);
     }
 }

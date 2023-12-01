@@ -26,6 +26,7 @@ public class RegisterController {
             model.addAttribute("hasError", true);
             model.addAttribute("error", error);
         }
+
         model.addAttribute("bodyContent", "register");
         return "master-template";
     }

@@ -1,5 +1,6 @@
 package mk.ukim.finki.wp.eshop.model;
 
+import jakarta.persistence.*;
 import lombok.Data;
 import mk.ukim.finki.wp.eshop.model.enumerations.ShoppingCartStatus;
 
@@ -8,17 +9,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Entity
+@Table(name="shopping_cart")
 public class ShoppingCart {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private LocalDateTime dateCreated;
 
+    @ManyToOne
     private User user;
 
+    @ManyToMany
+    @JoinTable(name = "shopping_cart_products")
     private List<Product> products;
 
+    @Enumerated(EnumType.STRING)
     private ShoppingCartStatus status;
+
+    public ShoppingCart() {
+
+    }
 
     public ShoppingCart(User user) {
         this.id = (long) (Math.random() * 1000);

@@ -8,8 +8,8 @@ import mk.ukim.finki.wp.eshop.model.exceptions.ProductAlreadyInShoppingCartExcep
 import mk.ukim.finki.wp.eshop.model.exceptions.ProductNotFoundException;
 import mk.ukim.finki.wp.eshop.model.exceptions.ShoppingCartNotFoundException;
 import mk.ukim.finki.wp.eshop.model.exceptions.UserNotFoundException;
-import mk.ukim.finki.wp.eshop.repository.InMemoryShoppingCartRepository;
-import mk.ukim.finki.wp.eshop.repository.InMemoryUserRepository;
+import mk.ukim.finki.wp.eshop.repository.inmemory.InMemoryShoppingCartRepository;
+import mk.ukim.finki.wp.eshop.repository.inmemory.InMemoryUserRepository;
 import mk.ukim.finki.wp.eshop.service.ProductService;
 import mk.ukim.finki.wp.eshop.service.ShoppingCartService;
 import org.springframework.stereotype.Service;

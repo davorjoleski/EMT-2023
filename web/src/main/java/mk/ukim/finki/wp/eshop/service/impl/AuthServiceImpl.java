@@ -4,7 +4,7 @@ import mk.ukim.finki.wp.eshop.model.User;
 import mk.ukim.finki.wp.eshop.model.exceptions.InvalidArgumentsException;
 import mk.ukim.finki.wp.eshop.model.exceptions.InvalidUserCredentialsException;
 import mk.ukim.finki.wp.eshop.model.exceptions.PasswordsDoNotMatchException;
-import mk.ukim.finki.wp.eshop.repository.InMemoryUserRepository;
+import mk.ukim.finki.wp.eshop.repository.inmemory.InMemoryUserRepository;
 import mk.ukim.finki.wp.eshop.service.AuthService;
 import org.springframework.stereotype.Service;
 

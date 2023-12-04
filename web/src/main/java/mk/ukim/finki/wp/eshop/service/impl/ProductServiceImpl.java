@@ -5,9 +5,9 @@ import mk.ukim.finki.wp.eshop.model.Manufacturer;
 import mk.ukim.finki.wp.eshop.model.Product;
 import mk.ukim.finki.wp.eshop.model.exceptions.CategoryNotFoundException;
 import mk.ukim.finki.wp.eshop.model.exceptions.ManufacturerNotFoundException;
-import mk.ukim.finki.wp.eshop.repository.InMemoryCategoryRepository;
-import mk.ukim.finki.wp.eshop.repository.InMemoryManufacturerRepository;
-import mk.ukim.finki.wp.eshop.repository.InMemoryProductRepository;
+import mk.ukim.finki.wp.eshop.repository.inmemory.InMemoryCategoryRepository;
+import mk.ukim.finki.wp.eshop.repository.inmemory.InMemoryManufacturerRepository;
+import mk.ukim.finki.wp.eshop.repository.inmemory.InMemoryProductRepository;
 import mk.ukim.finki.wp.eshop.service.ProductService;
 import org.springframework.stereotype.Service;
 

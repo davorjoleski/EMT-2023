@@ -1,7 +1,7 @@
 package mk.ukim.finki.wp.eshop.service.impl;
 
 import mk.ukim.finki.wp.eshop.model.Manufacturer;
-import mk.ukim.finki.wp.eshop.repository.InMemoryManufacturerRepository;
+import mk.ukim.finki.wp.eshop.repository.inmemory.InMemoryManufacturerRepository;
 import mk.ukim.finki.wp.eshop.service.ManufacturerService;
 import org.springframework.stereotype.Service;
 

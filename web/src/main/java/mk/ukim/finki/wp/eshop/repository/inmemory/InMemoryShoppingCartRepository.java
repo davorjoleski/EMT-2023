@@ -1,4 +1,4 @@
-package mk.ukim.finki.wp.eshop.repository;
+package mk.ukim.finki.wp.eshop.repository.inmemory;
 
 import mk.ukim.finki.wp.eshop.bootstrap.DataHolder;
 import mk.ukim.finki.wp.eshop.model.ShoppingCart;

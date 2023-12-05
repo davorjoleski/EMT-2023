@@ -5,16 +5,17 @@ import mk.ukim.finki.wp.eshop.model.exceptions.InvalidArgumentsException;
 import mk.ukim.finki.wp.eshop.model.exceptions.InvalidUserCredentialsException;
 import mk.ukim.finki.wp.eshop.model.exceptions.PasswordsDoNotMatchException;
 import mk.ukim.finki.wp.eshop.repository.inmemory.InMemoryUserRepository;
+import mk.ukim.finki.wp.eshop.repository.jpa.UserRepository;
 import mk.ukim.finki.wp.eshop.service.AuthService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    private final InMemoryUserRepository inMemoryUserRepository;
+    private final UserRepository userRepository;
 
-    public AuthServiceImpl(InMemoryUserRepository inMemoryUserRepository) {
-        this.inMemoryUserRepository = inMemoryUserRepository;
+    public AuthServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     private boolean credentialsInvalid(String username, String password) {
@@ -27,7 +28,7 @@ public class AuthServiceImpl implements AuthService {
             throw new InvalidArgumentsException();
         }
 
-        return inMemoryUserRepository.findByUsernameAndPassword(username, password)
+        return userRepository.findByUsernameAndPassword(username, password)
                 .orElseThrow(InvalidUserCredentialsException::new);
     }
 
@@ -42,6 +43,6 @@ public class AuthServiceImpl implements AuthService {
         }
 
         User user = new User(username, password, name, surname);
-        return inMemoryUserRepository.saveOrUpdate(user);
+        return userRepository.save(user);
     }
 }

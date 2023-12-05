@@ -17,4 +17,7 @@ public interface ProductService {
                            Integer quantity, Long category, Long manufacturer);
 
     void deleteById(Long id);
+
+    Optional<Product> edit(Long id, String name, Double price,
+                           Integer quantity, Long category, Long manufacturer);
 }

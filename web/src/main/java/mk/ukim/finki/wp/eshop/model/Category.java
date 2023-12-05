@@ -22,7 +22,6 @@ public class Category {
     }
 
     public Category(String name, String description) {
-        this.id = (long) (Math.random() * 1000);
         this.name = name;
         this.description = description;
     }

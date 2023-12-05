@@ -57,7 +57,7 @@ public class ProductController {
             model.addAttribute("manufacturers", manufacturers);
             model.addAttribute("categories", categories);
             model.addAttribute("product", product);
-            model.addAttribute("bodyContent", "add-product");
+            model.addAttribute("bodyContent", "edit-product");
             return "master-template";
         }
 
@@ -82,6 +82,17 @@ public class ProductController {
                               @RequestParam Long category,
                               @RequestParam Long manufacturer) {
         this.productService.save(name, price, quantity, category, manufacturer);
+        return "redirect:/products";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String saveProduct(@PathVariable("id") Long id,
+                              @RequestParam String name,
+                              @RequestParam Double price,
+                              @RequestParam Integer quantity,
+                              @RequestParam Long category,
+                              @RequestParam Long manufacturer) {
+        this.productService.edit(id, name, price, quantity, category, manufacturer);
         return "redirect:/products";
     }
 }

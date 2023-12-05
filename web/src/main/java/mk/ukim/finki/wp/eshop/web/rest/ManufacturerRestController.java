@@ -38,8 +38,11 @@ public class ManufacturerRestController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteById(@PathVariable Long id) {
-        if (this.manufacturerService.deleteById(id)) return ResponseEntity.ok().build();
-        return ResponseEntity.badRequest().build();
+        if (this.manufacturerService.exists(id)) {
+            this.manufacturerService.deleteById(id);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
 

@@ -14,6 +14,7 @@ import mk.ukim.finki.wp.eshop.service.ProductService;
 import mk.ukim.finki.wp.eshop.service.ShoppingCartService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -71,6 +72,16 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         shoppingCart.getProducts().add(product);
         return this.shoppingCartRepository.save(shoppingCart);
+    }
+
+    @Override
+    public List<ShoppingCart> filterByDateTimeBetween(LocalDateTime from, LocalDateTime to) {
+        return this.shoppingCartRepository.findByDateCreatedBetween(from, to);
+    }
+
+    @Override
+    public List<ShoppingCart> findAll() {
+        return this.shoppingCartRepository.findAll();
     }
 }
 

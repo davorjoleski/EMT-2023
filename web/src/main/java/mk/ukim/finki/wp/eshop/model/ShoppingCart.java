@@ -3,9 +3,11 @@ package mk.ukim.finki.wp.eshop.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import mk.ukim.finki.wp.eshop.model.enumerations.ShoppingCartStatus;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -17,6 +19,7 @@ public class ShoppingCart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dateCreated;
 
     @ManyToOne

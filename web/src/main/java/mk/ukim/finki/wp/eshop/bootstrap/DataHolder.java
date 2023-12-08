@@ -62,5 +62,32 @@ public class DataHolder {
             manufacturerRepository.saveAll(manufacturers);
         }
 
+        if (productRepository.count() == 0) {
+            List<Category> categoryList = categoryRepository.findAll();
+            List<Manufacturer> manufacturerList = manufacturerRepository.findAll();
+
+            products.add(new Product("Shoes", 30d, 1000, categoryList.get(0), manufacturerList.get(0)));
+            products.add(new Product("Hoodie", 50.99, 200, categoryList.get(0), manufacturerList.get(1)));
+            products.add(new Product("Gloves", 10d, 56000, categoryList.get(1), manufacturerList.get(2)));
+            products.add(new Product("Guitar", 590.99, 20, categoryList.get(2), manufacturerList.get(2)));
+            productRepository.saveAll(products);
+        }
+
+        if (shoppingCartRepository.count() == 0) {
+            List<Product> productList = productRepository.findAll();
+            List<User> userList = userRepository.findAll();
+
+            ShoppingCart shoppingCart1 = new ShoppingCart(userList.get(0));
+            ShoppingCart shoppingCart2 = new ShoppingCart(userList.get(1));
+
+            shoppingCart1.getProducts().add(productList.get(0));
+
+            shoppingCart2.getProducts().add(productList.get(0));
+            shoppingCart2.getProducts().add(productList.get(1));
+            shoppingCart2.getProducts().add(productList.get(2));
+
+            shoppingCartRepository.save(shoppingCart1);
+            shoppingCartRepository.save(shoppingCart2);
+        }
     }
 }

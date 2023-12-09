@@ -3,6 +3,7 @@ package mk.ukim.finki.wp.eshop.web.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import mk.ukim.finki.wp.eshop.model.ShoppingCart;
 import mk.ukim.finki.wp.eshop.model.User;
+import mk.ukim.finki.wp.eshop.service.AuthService;
 import mk.ukim.finki.wp.eshop.service.ShoppingCartService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +17,12 @@ import java.util.List;
 public class ShoppingCartController {
 
     private final ShoppingCartService shoppingCartService;
+    private final AuthService authService;
 
-    public ShoppingCartController(ShoppingCartService shoppingCartService) {
+
+    public ShoppingCartController(ShoppingCartService shoppingCartService, AuthService authService) {
         this.shoppingCartService = shoppingCartService;
+        this.authService = authService;
     }
 
     @GetMapping
@@ -67,5 +71,32 @@ public class ShoppingCartController {
         List<ShoppingCart> filteredCarts = shoppingCartService.filterByDateTimeBetween(from, to);
         model.addAttribute("carts", filteredCarts);
         return "shopping-carts-filtered";
+    }
+
+    @GetMapping("/count")
+    public String countShoppingCarts(HttpServletRequest req, Model model) {
+        List<ShoppingCart> shoppingCarts = shoppingCartService.findAll();
+        model.addAttribute("carts", shoppingCarts);
+
+        List<User> users = authService.findAll();
+        model.addAttribute("users", users);
+        return "shopping-carts-count";
+    }
+
+    @PostMapping("/count")
+    public String countShoppingCarts(@RequestParam String username,
+                                     HttpServletRequest req,
+                                     Model model) {
+        List<ShoppingCart> shoppingCarts = shoppingCartService.findAll();
+        model.addAttribute("carts", shoppingCarts);
+
+        List<User> users = authService.findAll();
+        model.addAttribute("users", users);
+
+        Long count = shoppingCartService.countSuccessfulOrders(username);
+        model.addAttribute("count", count);
+        model.addAttribute("username", username);
+
+        return "shopping-carts-count";
     }
 }

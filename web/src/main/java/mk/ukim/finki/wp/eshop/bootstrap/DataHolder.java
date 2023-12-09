@@ -3,6 +3,7 @@ package mk.ukim.finki.wp.eshop.bootstrap;
 import jakarta.annotation.PostConstruct;
 import mk.ukim.finki.wp.eshop.model.*;
 import mk.ukim.finki.wp.eshop.model.embeddables.UserAddress;
+import mk.ukim.finki.wp.eshop.model.enumerations.ShoppingCartStatus;
 import mk.ukim.finki.wp.eshop.repository.jpa.*;
 import org.springframework.stereotype.Component;
 
@@ -80,6 +81,7 @@ public class DataHolder {
 
             ShoppingCart shoppingCart1 = new ShoppingCart(userList.get(0));
             ShoppingCart shoppingCart2 = new ShoppingCart(userList.get(1));
+            ShoppingCart shoppingCart3 = new ShoppingCart(userList.get(1));
 
             shoppingCart1.getProducts().add(productList.get(0));
 
@@ -87,8 +89,15 @@ public class DataHolder {
             shoppingCart2.getProducts().add(productList.get(1));
             shoppingCart2.getProducts().add(productList.get(2));
 
+            shoppingCart3.getProducts().add(productList.get(0));
+
+            shoppingCart1.setStatus(ShoppingCartStatus.FINISHED);
+            shoppingCart2.setStatus(ShoppingCartStatus.FINISHED);
+            shoppingCart3.setStatus(ShoppingCartStatus.FINISHED);
+
             shoppingCartRepository.save(shoppingCart1);
             shoppingCartRepository.save(shoppingCart2);
+            shoppingCartRepository.save(shoppingCart3);
         }
     }
 }

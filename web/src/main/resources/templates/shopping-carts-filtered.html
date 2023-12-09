@@ -34,5 +34,15 @@
             <input type="datetime-local" id="to" name="to"/>
             <input type="submit">
         </form>
+
+        <h2>Count number of carts for a user, enter username</h2>
+        <form method="POST" action="/shopping-cart/count">
+            <input type="text" id="username" name="username"/>
+            <input type="submit" name="Count">
+        </form>
+
+        <div th:if="${username}">
+            User with username <span th:text="${username}"></span> has created <span th:text="${count}"></span> shopping carts
+        </div>
     </div>
 </div>

@@ -83,5 +83,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public List<ShoppingCart> findAll() {
         return this.shoppingCartRepository.findAll();
     }
+
+    @Override
+    public Long countSuccessfulOrders(String username) {
+        return this.shoppingCartRepository.countSuccessfulOrdersByUsername(username);
+    }
 }
 

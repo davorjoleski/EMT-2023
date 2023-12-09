@@ -10,6 +10,8 @@ import mk.ukim.finki.wp.eshop.repository.jpa.UserRepository;
 import mk.ukim.finki.wp.eshop.service.AuthService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AuthServiceImpl implements AuthService {
 
@@ -45,5 +47,10 @@ public class AuthServiceImpl implements AuthService {
 
         User user = new User(username, password, name, surname, new UserAddress());
         return userRepository.save(user);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 }

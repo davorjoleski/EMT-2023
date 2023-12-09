@@ -19,4 +19,6 @@ public interface ShoppingCartService {
 
     List<ShoppingCart> findAll();
 
+    Long countSuccessfulOrders(String username);
+
 }

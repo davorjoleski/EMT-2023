@@ -2,6 +2,7 @@ package mk.ukim.finki.wp.eshop.bootstrap;
 
 import jakarta.annotation.PostConstruct;
 import mk.ukim.finki.wp.eshop.model.*;
+import mk.ukim.finki.wp.eshop.model.embeddables.UserAddress;
 import mk.ukim.finki.wp.eshop.repository.jpa.*;
 import org.springframework.stereotype.Component;
 
@@ -41,10 +42,10 @@ public class DataHolder {
 
 
         if (userRepository.count() == 0) {
-            users.add(new User("kostadin.mishev", "km", "Kostadin", "Mishev"));
-            users.add(new User("ana.todorovska", "at", "Ana", "Todorovska"));
-            users.add(new User("milena.trajanoska", "mt", "Milena", "Trajanoska"));
-            users.add(new User("aleksandar.petrushevski", "ap", "Aleksandar", "Petrushevski"));
+            users.add(new User("kostadin.mishev", "km", "Kostadin", "Mishev", new UserAddress("Macedonia", "Skopje", "Ul. ulica123", "23/41-2")));
+            users.add(new User("ana.todorovska", "at", "Ana", "Todorovska", new UserAddress("Macedonia", "Bitola", "Ul. Bitolska", "27")));
+            users.add(new User("milena.trajanoska", "mt", "Milena", "Trajanoska", new UserAddress("Macedonia", "Skopje", "Ul. Skopska", "1-2/3")));
+            users.add(new User("aleksandar.petrushev", "ap", "Aleksandar", "Petrushev",  new UserAddress("Macedonia", "Skopje", "Ul. Asdf", "2/3-1")));
             userRepository.saveAll(users);
         }
 

@@ -1,6 +1,7 @@
 package mk.ukim.finki.wp.eshop.service.impl;
 
 import mk.ukim.finki.wp.eshop.model.User;
+import mk.ukim.finki.wp.eshop.model.embeddables.UserAddress;
 import mk.ukim.finki.wp.eshop.model.exceptions.InvalidArgumentsException;
 import mk.ukim.finki.wp.eshop.model.exceptions.InvalidUserCredentialsException;
 import mk.ukim.finki.wp.eshop.model.exceptions.PasswordsDoNotMatchException;
@@ -42,7 +43,7 @@ public class AuthServiceImpl implements AuthService {
             throw new PasswordsDoNotMatchException();
         }
 
-        User user = new User(username, password, name, surname);
+        User user = new User(username, password, name, surname, new UserAddress());
         return userRepository.save(user);
     }
 }

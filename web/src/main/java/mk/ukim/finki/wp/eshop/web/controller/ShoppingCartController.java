@@ -3,6 +3,7 @@ package mk.ukim.finki.wp.eshop.web.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import mk.ukim.finki.wp.eshop.model.ShoppingCart;
 import mk.ukim.finki.wp.eshop.model.User;
+import mk.ukim.finki.wp.eshop.model.enumerations.ShoppingCartStatus;
 import mk.ukim.finki.wp.eshop.service.AuthService;
 import mk.ukim.finki.wp.eshop.service.ShoppingCartService;
 import org.springframework.stereotype.Controller;
@@ -10,7 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/shopping-cart")
@@ -50,6 +53,30 @@ public class ShoppingCartController {
         } catch (RuntimeException exception) {
             return "redirect:/shopping-cart?error=" + exception.getMessage();
         }
+    }
+
+    @GetMapping("/edit")
+    public String showEditShoppingCart(HttpServletRequest req, Model model) {
+        User user = (User) req.getSession().getAttribute("user");
+        ShoppingCart shoppingCart = this.shoppingCartService.getActiveShoppingCart(user.getUsername());
+        model.addAttribute("cart", shoppingCart);
+        model.addAttribute("statuses", ShoppingCartStatus.values());
+
+        return "shopping-cart-edit";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateShoppingCart(@RequestParam ShoppingCartStatus status,
+                                     @PathVariable Long id,
+                                     HttpServletRequest req) {
+
+        Optional<ShoppingCart> shoppingCart = this.shoppingCartService.findById(id);
+        shoppingCart.ifPresent((cart) -> {
+            cart.setStatus(status);
+            this.shoppingCartService.save(cart);
+        });
+
+        return "redirect:/shopping-cart";
     }
 
     @GetMapping("/filter")

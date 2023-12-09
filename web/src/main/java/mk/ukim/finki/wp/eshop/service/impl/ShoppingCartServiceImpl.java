@@ -88,5 +88,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public Long countSuccessfulOrders(String username) {
         return this.shoppingCartRepository.countSuccessfulOrdersByUsername(username);
     }
+
+    @Override
+    public ShoppingCart save(ShoppingCart cart) {
+        return this.shoppingCartRepository.save(cart);
+    }
+
+    @Override
+    public Optional<ShoppingCart> findById(Long id) {
+        return this.shoppingCartRepository.findById(id);
+    }
 }
 

@@ -1,8 +1,11 @@
 package mk.ukim.finki.wp.eshop.web.controller;
 
+import mk.ukim.finki.wp.eshop.model.Role;
 import mk.ukim.finki.wp.eshop.model.exceptions.InvalidArgumentsException;
 import mk.ukim.finki.wp.eshop.model.exceptions.PasswordsDoNotMatchException;
+import mk.ukim.finki.wp.eshop.model.exceptions.UsernameAlreadyExistsException;
 import mk.ukim.finki.wp.eshop.service.AuthService;
+import mk.ukim.finki.wp.eshop.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class RegisterController {
 
     private final AuthService authService;
+    private final UserService userService;
 
-    public RegisterController(AuthService authService) {
+    public RegisterController(AuthService authService, UserService userService) {
         this.authService = authService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -36,11 +41,13 @@ public class RegisterController {
                            @RequestParam String password,
                            @RequestParam String repeatedPassword,
                            @RequestParam String name,
-                           @RequestParam String surname) {
+                           @RequestParam String surname,
+                           @RequestParam Role role
+    ) {
         try{
-            this.authService.register(username, password, repeatedPassword, name, surname);
+            this.userService.register(username, password, repeatedPassword, name, surname, role);
             return "redirect:/login";
-        } catch (InvalidArgumentsException | PasswordsDoNotMatchException exception) {
+        } catch (InvalidArgumentsException | PasswordsDoNotMatchException | UsernameAlreadyExistsException exception) {
             return "redirect:/register?error=" + exception.getMessage();
         }
     }

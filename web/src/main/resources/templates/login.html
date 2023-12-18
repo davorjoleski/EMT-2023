@@ -12,9 +12,7 @@
                    required="">
         </p>
 
-        <th:block th:if="${hasError}">
-            <div th:text="${error}" class="text-danger"></div>
-        </th:block>
+        <div th:if="${param.error}" th:text="${param.error}" class="text-danger"></div>
 
         <div class="row">
             <div class="col-md-3">

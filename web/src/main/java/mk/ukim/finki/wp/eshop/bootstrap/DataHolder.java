@@ -5,6 +5,7 @@ import mk.ukim.finki.wp.eshop.model.*;
 import mk.ukim.finki.wp.eshop.model.embeddables.UserAddress;
 import mk.ukim.finki.wp.eshop.model.enumerations.ShoppingCartStatus;
 import mk.ukim.finki.wp.eshop.repository.jpa.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -24,13 +25,15 @@ public class DataHolder {
     private final ProductRepository productRepository;
     private final ShoppingCartRepository shoppingCartRepository;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public DataHolder(CategoryRepository categoryRepository, ManufacturerRepository manufacturerRepository, ProductRepository productRepository, ShoppingCartRepository shoppingCartRepository, UserRepository userRepository) {
+    public DataHolder(CategoryRepository categoryRepository, ManufacturerRepository manufacturerRepository, ProductRepository productRepository, ShoppingCartRepository shoppingCartRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.categoryRepository = categoryRepository;
         this.manufacturerRepository = manufacturerRepository;
         this.productRepository = productRepository;
         this.shoppingCartRepository = shoppingCartRepository;
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostConstruct
@@ -43,10 +46,52 @@ public class DataHolder {
 
 
         if (userRepository.count() == 0) {
-            users.add(new User("kostadin.mishev", "km", "Kostadin", "Mishev", new UserAddress("Macedonia", "Skopje", "Ul. ulica123", "23/41-2")));
-            users.add(new User("ana.todorovska", "at", "Ana", "Todorovska", new UserAddress("Macedonia", "Bitola", "Ul. Bitolska", "27")));
-            users.add(new User("milena.trajanoska", "mt", "Milena", "Trajanoska", new UserAddress("Macedonia", "Skopje", "Ul. Skopska", "1-2/3")));
-            users.add(new User("aleksandar.petrushev", "ap", "Aleksandar", "Petrushev",  new UserAddress("Macedonia", "Skopje", "Ul. Asdf", "2/3-1")));
+            users.add(
+                    new User(
+                            "kostadin.mishev",
+                            passwordEncoder.encode("km"),
+                            "Kostadin",
+                            "Mishev",
+                            new UserAddress("Macedonia", "Skopje", "Ul. ulica123", "23/41-2"),
+                            Role.ROLE_USER
+            ));
+            users.add(
+                    new User(
+                            "ana.todorovska",
+                            passwordEncoder.encode("at"),
+                            "Ana",
+                            "Todorovska",
+                            new UserAddress("Macedonia", "Bitola", "Ul. Bitolska", "27"),
+                            Role.ROLE_USER
+                    ));
+            users.add(
+                    new User(
+                            "milena.trajanoska",
+                            passwordEncoder.encode("mt"),
+                            "Milena",
+                            "Trajanoska",
+                            new UserAddress("Macedonia", "Skopje", "Ul. Skopska", "1-2/3"),
+                            Role.ROLE_USER
+                    ));
+            users.add(
+                    new User(
+                            "aleksandar.petrushev",
+                            passwordEncoder.encode("ap"),
+                            "Aleksandar",
+                            "Petrushev",
+                            new UserAddress("Macedonia", "Skopje", "Ul. Asdf", "2/3-1"),
+                            Role.ROLE_USER
+                    ));
+            users.add(
+                    new User(
+                            "admin",
+                            passwordEncoder.encode("admin"),
+                            "admin",
+                            "admin",
+                            new UserAddress(),
+                            Role.ROLE_ADMIN
+                    )
+            );
             userRepository.saveAll(users);
         }
 

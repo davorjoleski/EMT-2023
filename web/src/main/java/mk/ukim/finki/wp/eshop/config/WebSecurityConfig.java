@@ -2,7 +2,8 @@ package mk.ukim.finki.wp.eshop.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,9 +22,11 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
 
     private final PasswordEncoder passwordEncoder;
+    private final CustomUsernamePasswordAuthenticationProvider authProvider;
 
-    public WebSecurityConfig(PasswordEncoder passwordEncoder) {
+    public WebSecurityConfig(PasswordEncoder passwordEncoder, CustomUsernamePasswordAuthenticationProvider authProvider) {
         this.passwordEncoder = passwordEncoder;
+        this.authProvider = authProvider;
     }
 
     @Bean
@@ -38,7 +41,6 @@ public class WebSecurityConfig {
                         .anyRequest()
                         .authenticated()
                 )
-                .httpBasic(Customizer.withDefaults())
                 .formLogin((form) -> form
                         .loginPage("/login")
                         .permitAll()
@@ -59,7 +61,8 @@ public class WebSecurityConfig {
         return http.build();
     }
 
-    @Bean
+    // In Memory Authentication
+    //@Bean
     public UserDetailsService userDetailsService() {
         UserDetails user1 = User.builder()
                 .username("kostadin.mishev")
@@ -88,5 +91,13 @@ public class WebSecurityConfig {
                 .build();
 
         return new InMemoryUserDetailsManager(user1, user2, user3, user4, admin);
+    }
+
+    @Bean
+    public AuthenticationManager authManager(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder =
+                http.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.authenticationProvider(authProvider);
+        return authenticationManagerBuilder.build();
     }
 }

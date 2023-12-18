@@ -21,32 +21,14 @@ public class AuthServiceImpl implements AuthService {
         this.userRepository = userRepository;
     }
 
-    private boolean credentialsInvalid(String username, String password) {
-        return username == null || password == null || username.isEmpty() || password.isEmpty();
-    }
-
     @Override
     public User login(String username, String password) {
-        if (credentialsInvalid(username, password)) {
+        if (username == null || password == null || username.isEmpty() || password.isEmpty()) {
             throw new InvalidArgumentsException();
         }
 
         return userRepository.findByUsernameAndPassword(username, password)
                 .orElseThrow(InvalidUserCredentialsException::new);
-    }
-
-    @Override
-    public User register(String username, String password, String repeatPassword, String name, String surname) {
-        if (credentialsInvalid(username, password)) {
-            throw new InvalidArgumentsException();
-        }
-
-        if (!password.equals(repeatPassword)) {
-            throw new PasswordsDoNotMatchException();
-        }
-
-        User user = new User(username, password, name, surname, new UserAddress());
-        return userRepository.save(user);
     }
 
     @Override

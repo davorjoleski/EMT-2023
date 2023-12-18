@@ -2,10 +2,12 @@ package mk.ukim.finki.wp.eshop.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name="products")
 public class Product {
@@ -25,10 +27,6 @@ public class Product {
 
     @ManyToOne
     private Manufacturer manufacturer;
-
-    public Product() {
-
-    }
 
     public Product(String name,
                    Double price,

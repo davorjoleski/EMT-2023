@@ -2,8 +2,10 @@ package mk.ukim.finki.wp.eshop.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name="manufacturers")
 public class Manufacturer {
@@ -16,9 +18,6 @@ public class Manufacturer {
 
     @Column(name = "manufacturer_address")
     private String address;
-
-    public Manufacturer() {
-    }
 
     public Manufacturer(String name, String address) {
         this.name = name;

@@ -1,14 +1,15 @@
 package mk.ukim.finki.wp.eshop.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import mk.ukim.finki.wp.eshop.convertors.UserFullnameConverter;
+import lombok.NoArgsConstructor;
+import mk.ukim.finki.wp.eshop.convertors.UserFullNameConverter;
 import mk.ukim.finki.wp.eshop.model.embeddables.UserAddress;
 
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "shop_users")
 public class User {
@@ -18,8 +19,8 @@ public class User {
 
     private String password;
 
-    @Convert(converter = UserFullnameConverter.class)
-    private UserFullname fullname;
+    @Convert(converter = UserFullNameConverter.class)
+    private UserFullName fullname;
 
     @OneToMany(fetch = FetchType.EAGER)
     private List<ShoppingCart> carts;
@@ -33,14 +34,10 @@ public class User {
     })
     private UserAddress userAddress;
 
-    public User() {
-
-    }
-
     public User(String username, String password, String name, String surname, UserAddress userAddress) {
         this.username = username;
         this.password = password;
-        this.fullname = new UserFullname(name, surname);
+        this.fullname = new UserFullName(name, surname);
         this.userAddress = userAddress;
     }
 }

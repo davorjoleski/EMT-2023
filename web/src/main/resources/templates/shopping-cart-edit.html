@@ -6,19 +6,27 @@
         </div>
     </section>
 
+    <div class="m-5">
+        <a th:href="@{/shopping-cart}" class="btn btn-link">Back</a>
+    </div>
     <div class="row">
         <ul>
             <td th:text="${cart.getDateCreated()}"></td>
             <td th:text="${cart.getUser() != null} ? ${cart.getUser().getUsername()} : 'No User'"></td>
             <form th:method="POST" th:action="'/shopping-cart/update/' + ${cart.getId()}">
-                <select name="status" id="status">
+               <div class="form-group">
+                <select name="status" id="status" class="form-control">
                     <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}" th:selected="${cart.getStatus() == status}">
 
                     </option>
                 </select>
-
-                <input type="submit">
+               </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary">
+                </div>
             </form>
+
+
         </ul>
     </div>
 </div>

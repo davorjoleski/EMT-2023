@@ -2,14 +2,15 @@ package mk.ukim.finki.wp.eshop.convertors;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import mk.ukim.finki.wp.eshop.model.UserFullname;
+import mk.ukim.finki.wp.eshop.model.UserFullName;
 
 @Converter
-public class UserFullnameConverter implements AttributeConverter<UserFullname, String> {
+public class UserFullNameConverter implements AttributeConverter<UserFullName, String> {
     private static final String SEPARATOR = ", ";
 
+
     @Override
-    public String convertToDatabaseColumn(UserFullname fullname) {
+    public String convertToDatabaseColumn(UserFullName fullname) {
         if (fullname == null) {
             return null;
         }
@@ -18,11 +19,12 @@ public class UserFullnameConverter implements AttributeConverter<UserFullname, S
         if (fullname.getSurname() != null && !fullname.getSurname()
                 .isEmpty()) {
             sb.append(fullname.getSurname());
-            sb.append(SEPARATOR);
+
         }
 
         if (fullname.getName() != null
                 && !fullname.getName().isEmpty()) {
+            sb.append(SEPARATOR);
             sb.append(fullname.getName());
         }
 
@@ -30,30 +32,30 @@ public class UserFullnameConverter implements AttributeConverter<UserFullname, S
     }
 
     @Override
-    public UserFullname convertToEntityAttribute(String dbUserFullname) {
+    public UserFullName convertToEntityAttribute(String dbUserFullname) {
         if (dbUserFullname == null || dbUserFullname.isEmpty()) {
             return null;
         }
 
         String[] pieces = dbUserFullname.split(SEPARATOR);
 
-        if (pieces == null || pieces.length == 0) {
+        if (pieces.length == 0) {
             return null;
         }
 
-        UserFullname fullname = new UserFullname();
+        UserFullName fullName = new UserFullName();
         String firstPiece = !pieces[0].isEmpty() ? pieces[0] : null;
         if (dbUserFullname.contains(SEPARATOR)) {
-            fullname.setSurname(firstPiece);
+            fullName.setSurname(firstPiece);
 
             if (pieces.length >= 2 && pieces[1] != null
                     && !pieces[1].isEmpty()) {
-                fullname.setName(pieces[1]);
+                fullName.setName(pieces[1]);
             }
         } else {
-            fullname.setName(firstPiece);
+            fullName.setName(firstPiece);
         }
 
-        return fullname;
+        return fullName;
     }
 }

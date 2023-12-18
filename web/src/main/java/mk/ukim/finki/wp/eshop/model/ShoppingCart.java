@@ -2,15 +2,16 @@ package mk.ukim.finki.wp.eshop.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import mk.ukim.finki.wp.eshop.model.enumerations.ShoppingCartStatus;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name="shopping_cart")
 public class ShoppingCart {
@@ -31,10 +32,6 @@ public class ShoppingCart {
 
     @Enumerated(EnumType.STRING)
     private ShoppingCartStatus status;
-
-    public ShoppingCart() {
-
-    }
 
     public ShoppingCart(User user) {
         this.dateCreated = LocalDateTime.now();

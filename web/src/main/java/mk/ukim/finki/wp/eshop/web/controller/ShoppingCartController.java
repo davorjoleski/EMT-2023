@@ -61,8 +61,8 @@ public class ShoppingCartController {
         ShoppingCart shoppingCart = this.shoppingCartService.getActiveShoppingCart(user.getUsername());
         model.addAttribute("cart", shoppingCart);
         model.addAttribute("statuses", ShoppingCartStatus.values());
-
-        return "shopping-cart-edit";
+        model.addAttribute("bodyContent", "shopping-cart-edit");
+        return "master-template";
     }
 
     @PostMapping("/update/{id}")
@@ -80,39 +80,37 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/filter")
-    public String addProductToShoppingCart(@RequestParam(required = false) LocalDateTime from,
-                                           @RequestParam(required = false) LocalDateTime to,
-                                           HttpServletRequest req,
-                                           Model model) {
+    public String getFilterShoppingCartsPage(Model model) {
         List<ShoppingCart> carts = shoppingCartService.findAll();
         model.addAttribute("carts", carts);
-        return "shopping-carts-filtered";
+        model.addAttribute("bodyContent", "shopping-carts-filtered");
+        return "master-template";
     }
 
 
     @PostMapping("/filter")
     public String filterShoppingCarts(@RequestParam LocalDateTime from,
                                       @RequestParam LocalDateTime to,
-                                      HttpServletRequest req,
                                       Model model) {
         List<ShoppingCart> filteredCarts = shoppingCartService.filterByDateTimeBetween(from, to);
         model.addAttribute("carts", filteredCarts);
-        return "shopping-carts-filtered";
+        model.addAttribute("bodyContent", "shopping-carts-filtered");
+        return "master-template";
     }
 
     @GetMapping("/count")
-    public String countShoppingCarts(HttpServletRequest req, Model model) {
+    public String getCountShoppingCartsPage(Model model) {
         List<ShoppingCart> shoppingCarts = shoppingCartService.findAll();
         model.addAttribute("carts", shoppingCarts);
 
         List<User> users = authService.findAll();
         model.addAttribute("users", users);
-        return "shopping-carts-count";
+        model.addAttribute("bodyContent", "shopping-carts-count");
+        return "master-template";
     }
 
     @PostMapping("/count")
-    public String countShoppingCarts(@RequestParam String username,
-                                     HttpServletRequest req,
+    public String countSuccessfulShoppingCartsByUser(@RequestParam String username,
                                      Model model) {
         List<ShoppingCart> shoppingCarts = shoppingCartService.findAll();
         model.addAttribute("carts", shoppingCarts);
@@ -124,6 +122,7 @@ public class ShoppingCartController {
         model.addAttribute("count", count);
         model.addAttribute("username", username);
 
-        return "shopping-carts-count";
+        model.addAttribute("bodyContent", "shopping-carts-count");
+        return "master-template";
     }
 }

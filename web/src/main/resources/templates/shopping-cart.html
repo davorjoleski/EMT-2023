@@ -31,11 +31,13 @@
                 </div>
             </div>
         </div>
-        <h3>Cart Admin Panel</h3>
-        <div class="row">
-            <div class="col-md-3"><a href="/shopping-cart/filter">Filter Carts</a></div>
-            <div class="col-md-3"><a href="/shopping-cart/count">Count Carts for given user</a></div>
-            <div class="col-md-3"><a href="/shopping-cart/edit">Edit current cart</a></div>
-        </div>
+        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+            <h3>Cart Admin Panel</h3>
+            <div class="row">
+                <div class="col-md-3"><a href="/shopping-cart/filter">Filter Carts</a></div>
+                <div class="col-md-3"><a href="/shopping-cart/count">Count Carts for given user</a></div>
+                <div class="col-md-3"><a href="/shopping-cart/edit">Edit current cart</a></div>
+            </div>
+        </th:block>
     </div>
 </div>

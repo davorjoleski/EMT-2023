@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,8 +36,8 @@ public class ShoppingCartController {
             model.addAttribute("error", error);
         }
 
-        User user = (User) req.getSession().getAttribute("user");
-        ShoppingCart shoppingCart = this.shoppingCartService.getActiveShoppingCart(user.getUsername());
+        String username = req.getRemoteUser();
+        ShoppingCart shoppingCart = this.shoppingCartService.getActiveShoppingCart(username);
         model.addAttribute("products", this.shoppingCartService.listAllProductsInShoppingCart(shoppingCart.getId()));
         model.addAttribute("bodyContent", "shopping-cart");
         return "master-template";
@@ -47,8 +46,8 @@ public class ShoppingCartController {
     @PostMapping("/add-product/{id}")
     public String addProductToShoppingCart(@PathVariable Long id, HttpServletRequest req) {
         try {
-            User user = (User) req.getSession().getAttribute("user");
-            ShoppingCart shoppingCart = this.shoppingCartService.addProductToShoppingCart(user.getUsername(), id);
+            String username = req.getRemoteUser();
+            ShoppingCart shoppingCart = this.shoppingCartService.addProductToShoppingCart(username, id);
             return "redirect:/shopping-cart";
         } catch (RuntimeException exception) {
             return "redirect:/shopping-cart?error=" + exception.getMessage();
@@ -57,8 +56,8 @@ public class ShoppingCartController {
 
     @GetMapping("/edit")
     public String showEditShoppingCart(HttpServletRequest req, Model model) {
-        User user = (User) req.getSession().getAttribute("user");
-        ShoppingCart shoppingCart = this.shoppingCartService.getActiveShoppingCart(user.getUsername());
+        String username = req.getRemoteUser();
+        ShoppingCart shoppingCart = this.shoppingCartService.getActiveShoppingCart(username);
         model.addAttribute("cart", shoppingCart);
         model.addAttribute("statuses", ShoppingCartStatus.values());
         model.addAttribute("bodyContent", "shopping-cart-edit");

@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebInitParam;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import mk.ukim.finki.wp.eshop.model.User;
+import org.springframework.context.annotation.Profile;
 
 import java.io.IOException;
 
@@ -15,6 +16,7 @@ import java.io.IOException;
             @WebInitParam(name = "login-path", value = "/login"),
             @WebInitParam(name = "register-path", value = "/register")
         })
+@Profile("servlet")
 public class LoginFilter implements Filter {
 
     private String loginPath;

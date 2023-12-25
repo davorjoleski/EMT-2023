@@ -15,4 +15,5 @@ public interface ManufacturerService {
     void deleteById(Long id);
 
     boolean exists(Long id);
+
 }
